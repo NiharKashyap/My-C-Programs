@@ -1,0 +1,50 @@
+int push(STACK *s, NODE *d)
+{
+	stack_node *node = malloc(sizeof(stack_node));
+	node->D = d;
+	node->next = s->tos;
+	printf("Pushed %d\n", node->D->info);
+	s->tos = node; 
+}
+int pop(STACK *s)
+{
+	stack_node *d = s->tos;
+	s->tos = s->tos->next;
+	printf("--Popped %d --\n", d->D->info);
+	return d; 
+}
+
+int is_empty(STACK *s)
+{
+	if (s->tos==NULL)
+		return 1;
+	
+	return 0;
+}
+
+int preorder(NODE *root)
+{
+	STACK *s;
+	stack_node *curr;
+	if(root->info==NULL)
+	{
+		printf("Tree is empty\n");
+	}
+	else
+	{
+		push(s, root);
+		while(!is_empty(s))
+		{
+			curr = pop(s);
+			if(curr->D->right)
+			{
+				push(s,curr->D->right);
+			}
+			if(curr->D->left)
+			{
+				push(s,curr->D->left);
+			}	
+		}
+	}
+	return 0;
+}
